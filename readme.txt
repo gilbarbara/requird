@@ -1,7 +1,7 @@
 === Requird ===
 Contributors: gilbarbara (Gil Barbara)
-Author URI: http://kollectiv.org/
-Plugin URI: http://kollectiv.org/requird/
+Author URI: http://kollectiv.org/requird/
+Plugin URI: https://github.com/gilbarbara/requird
 Tags: require, force, post, custom types, publish
 Requires at least: 3.x
 Tested up to: 3.5
