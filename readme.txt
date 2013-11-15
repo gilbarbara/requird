@@ -4,8 +4,8 @@ Author URI: http://kollectiv.org/requird/
 Plugin URI: https://github.com/gilbarbara/requird
 Tags: require, force, post, custom types, publish
 Requires at least: 3.x
-Tested up to: 3.5
-Stable tag: 1.0.1
+Tested up to: 3..7.1
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ Require users to fill selected fields before posting.
 
 == Description ==
 
-Once activated and configured, this plugin will require users to fill selected fields before publishing posts/pages, adding a 'required' message below them.
+Once activated and configured, this plugin will require users to fill selected fields before publishing posts, page, custom post types / custom fields.
 
 == Installation ==
 

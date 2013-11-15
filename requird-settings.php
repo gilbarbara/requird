@@ -21,7 +21,7 @@ class Requird {
 	public $options;
 	public $version;
 
-	var $default_options = array();
+	var $default_options = array('error_message' => 'Field Required');
 
 	function __construct() {
 		// Set current options
@@ -55,6 +55,10 @@ class Requird {
 			$options['version'] = $this->version;
 			$options_need_updating = true;
 		}
+		if (!isset($options['error_message'])) {
+			$options['error_message'] = 'Field Required';
+			$options_need_updating = true;
+		}
 
 		// Save options to database if they've been updated
 		if ($options_need_updating) {
@@ -65,13 +69,15 @@ class Requird {
 	}
 
 	function admin_menu() {
-		add_options_page(
+
+		add_management_page( __( 'Requird Options', 'requird' ), __( 'Requird', 'requird' ), 'manage_options', 'requird', array(&$this, 'options_page') );
+	/*	add_options_page(
 			'Required Options',
 			'Requird',
 			'manage_options',
 			'requird',
 			array(&$this, 'options_page')
-		);
+		);*/
 	}
 
 	function initialize_options() {
@@ -88,12 +94,32 @@ class Requird {
 		$post_types = get_post_types(array('public' => true));
 		// Remove certain post types from array
 		$post_types = array_diff($post_types, array('attachment', 'revision', 'nav_menu_item'));
+		$args = array(
+			'public'   => true,
+			'_builtin' => false
+
+		);
+		$taxonomies = get_taxonomies(array('public' => true, '_builtin' => false),'objects');
+
+		$this->add_text_setting(
+			'error_message',
+			'Required Message',
+			'The message to show when a required field is empty'
+		);
 
 		foreach ($post_types as $post_type) {
-
 			$fieldsAri = array();
 			foreach ($supports as $support) {
 				if (post_type_supports($post_type, $support)) $fieldsAri[] = $support;
+			}
+			if ($post_type == 'post') {
+				$fieldsAri[] = 'category';
+				$fieldsAri[] = 'post_tag';
+			}
+			foreach ($taxonomies as $k => $v) {
+				if (in_array($post_type, $v->object_type)) {
+					$fieldsAri[] = $k;
+				}
 			}
 
 			$this->add_multicheckbox_setting(
@@ -104,7 +130,7 @@ class Requird {
 			$this->add_text_setting(
 				$post_type . '-custom',
 				'',
-				'Enter the slugs of the custom meta separated by comma. No spaces.'
+				'Enter the slugs of the custom fields separated by comma. No spaces.'
 			);
 		}
 
