@@ -31,7 +31,7 @@ class Requird {
 		// Initialize options
 		add_action('admin_init', array(&$this, 'initialize_options'));
 		// Settings page actions
-		$this->version = '1.0.1';
+		$this->version = '1.2.2';
 	}
 
 	// Set options & possibly upgrade
